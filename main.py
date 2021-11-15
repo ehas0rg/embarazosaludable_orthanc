@@ -30,15 +30,15 @@ ORTHANC_USERNAME = credentials["orthanc_username"]
 ORTHANC_PASSWORD = credentials["orthanc_password"]
 
 PROGRAM = "wVXEoaPG9MA"  # Programa Embarazo Saludable
-PROGRAM_STAGE = "rnbC8j4Xct0" # Atención
-OU_ROOT = "kOIzn8kS2fR"
+PROGRAM_STAGE = "rnbC8j4Xct0"  # Atención
+OU_ROOT = "kOIzn8kS2fR"  # Huehuetenango
 DE_ULTRASOUND_DATE = "gvaOAXkGaKW"
 
 DE_TRIMESTRE = "LSy63OWIUJT"
 
-DE_1T = ["QtpIf5fJRwD"] # CRL
-DE_2y3T= ["W8UQrkdmkQN", "Mnfx2QiyhWt", "hCi8La8hX1K", "iqBpedGaObC", "mLDhI8xUyf6", "D2SkGb4y041"]
-# DBP, CC, CA, LF, Placenta, Medida Columna Máxima
+DE_1T = ["QtpIf5fJRwD", "QeSxbCMaAmd"] # CRL, CRL Gemelar
+DE_2y3T= ["W8UQrkdmkQN", "Mnfx2QiyhWt", "hCi8La8hX1K", "iqBpedGaObC", "mLDhI8xUyf6", "D2SkGb4y041", "cFWqcDuodl8", "hMluZp0Hyzu","QAJqmb2bRrj", "nxk2xDb9l4D","gCbgrSnE7Hd", "Gm7qJsPq3Lt"]
+# DBP, CC, CA, LF, Placenta, Medida Columna Máxima, DBP GEMELAR, CA GEMELAR, CC GEMELAR, LF GEMELAR, PLACENTA GEMELAR, COLUMNA GEMELAR
 
 TEA_CODIGO_CRIBADO = "qNAjhxrtjGp"
 
@@ -135,13 +135,14 @@ def get_image_de_uid(trimestre, de_index):
         return None
 
 
-def expected_number_images(trimestre):
+def expected_max_number_images(trimestre):
     if trimestre == "primerTrimestreOpt":
         return len(DE_1T)
     elif trimestre in ["segundoTrimestreOpt", "tercerTrimestreOpt"]:
         return len(DE_2y3T)
     else:
         return None # TODO raise error or control the value
+
 
 # Returns the uid of the fileresource
 def post_image_dhis2(filename):
@@ -364,8 +365,8 @@ def main(ultrasound_date):
                         logger.info(f"Retrieved for Id Único {id_unico} and Series {series_id} a total number of {len(instances)} instances.")
 
                         # Check if it is the number of instances expected
-                        if len(instances) != expected_number_images(events_without_image[event_uid]["trimestre"]):
-                            logger.error(f'Event ({event_uid}). The number of images ({len(instances)}) are different than expected ({expected_number_images(events_without_image[event_uid]["trimestre"])})')
+                        if len(instances) > expected_max_number_images(events_without_image[event_uid]["trimestre"]):
+                            logger.error(f'Event ({event_uid}). The number of images ({len(instances)}) are different than expected ({expected_max_number_images(events_without_image[event_uid]["trimestre"])})')
                             continue
 
                         for idx_instances, instance in enumerate(instances):  # Keep the order
@@ -378,8 +379,8 @@ def main(ultrasound_date):
                         logger.info(f'{id_unico}: Generated {len(events_without_image[event_uid]["images"])} images for event ({event_uid})')
 
                         logger.debug(events_without_image[event_uid]["images"])
-                        if len(events_without_image[event_uid]["images"]) != expected_number_images(events_without_image[event_uid]["trimestre"]):
-                            logger.error(f'Event ({event_uid}). The number of images generated ({len(events_without_image[event_uid]["images"])}) are different than expected ({expected_number_images(events_without_image[event_uid]["trimestre"])})')
+                        if len(events_without_image[event_uid]["images"]) > expected_max_number_images(events_without_image[event_uid]["trimestre"]):
+                            logger.error(f'Event ({event_uid}). The number of images generated ({len(events_without_image[event_uid]["images"])}) are different than expected ({expected_max_number_images(events_without_image[event_uid]["trimestre"])})')
                             continue
 
                     # Uploading images to dhis2
