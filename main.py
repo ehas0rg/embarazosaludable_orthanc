@@ -36,7 +36,7 @@ DE_ULTRASOUND_DATE = "gvaOAXkGaKW"
 
 DE_TRIMESTRE = "LSy63OWIUJT"
 
-DE_1T = ["QtpIf5fJRwD", "QeSxbCMaAmd"] # CRL, CRL Gemelar
+DE_1T = ["AL4SJgzL1oN", "QtpIf5fJRwD"] # CRL, CRL Gemelar
 DE_2y3T= ["W8UQrkdmkQN", "Mnfx2QiyhWt", "hCi8La8hX1K", "iqBpedGaObC", "mLDhI8xUyf6", "D2SkGb4y041", "cFWqcDuodl8", "hMluZp0Hyzu","QAJqmb2bRrj", "nxk2xDb9l4D","gCbgrSnE7Hd", "Gm7qJsPq3Lt"]
 # DBP, CC, CA, LF, Placenta, Medida Columna Máxima, DBP GEMELAR, CA GEMELAR, CC GEMELAR, LF GEMELAR, PLACENTA GEMELAR, COLUMNA GEMELAR
 
