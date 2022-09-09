@@ -137,9 +137,9 @@ def get_image_de_uid(trimestre, de_index):
 
 def expected_max_number_images(trimestre):
     if trimestre == "primerTrimestreOpt":
-        return len(DE_1T)
+        return (len(DE_1T) + 1)
     elif trimestre in ["segundoTrimestreOpt", "tercerTrimestreOpt"]:
-        return len(DE_2y3T)
+        return (len(DE_2y3T) + 1)
     else:
         return None # TODO raise error or control the value
 
